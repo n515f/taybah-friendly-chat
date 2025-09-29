@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nux.T Visa — إصدار التأشيرات والإقامات</title>
+  <meta name="description" content="Nux.T Visa: منصة عصرية لإصدار التأشيرات والإقامات للأفراد والشركات في السعودية.">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/images/logo/favicon.png">
+
+  <!-- حزمة التنسيقات (style.css يقوم بعمل @import لباقي الملفات) -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="home">
+  <!-- يتم الحقن -->
+  <div id="__header"></div>
+
+  <main>
+    <!-- يتم الحقن -->
+    <div id="__hero"></div>
+
+    <!-- شريط إعلانات/شركاء -->
+    <section class="section marquee-ads" id="ads" aria-label="شركاؤنا">
+      <div class="container">
+        <div class="ads-track" id="adsTrack">
+          <img src="assets/images/logo/nux-t-logo.png" alt="Partner" onerror="this.style.display='none'">
+          <img src="assets/images/logo/nux-t-logo.png" alt="Partner" onerror="this.style.display='none'">
+          <img src="assets/images/logo/nux-t-logo.png" alt="Partner" onerror="this.style.display='none'">
+          <img src="assets/images/logo/nux-t-logo.png" alt="Partner" onerror="this.style.display='none'">
+          <img src="assets/images/logo/nux-t-logo.png" alt="Partner" onerror="this.style.display='none'">
+        </div>
+      </div>
+    </section>
+
+    <!-- لماذا Nux.T -->
+<section class="section" id="why">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="why_title">لماذا Nux.T؟</h2>
+      <p class="muted" data-i18n="why_sub">خدمات منظّمة ببطاقات نظيفة وتفاصيل واضحة.</p>
+    </div>
+
+    <div class="grid cards-3">
+
+      <!-- بطاقة 1: تأشيرات العمل -->
+      <article class="card reveal service-card">
+        <div class="h">
+          <span class="icon" aria-hidden="true">💼</span>
+          <span class="title">تأشيرات العمل</span>
+        </div>
+        <p class="desc">
+          تجهيز المتطلبات، تعبئة النماذج، ومتابعة الاعتمادات حتى الإصدار.
+        </p>
+        <ul class="list">
+          <li>✔ جميع المهن والجنسيات</li>
+          <li>✔ تدقيق مستندات دقيق</li>
+          <li>✔ تحديثات حالة لحظية</li>
+        </ul>
+        <a class="btn btn-brand" href="pages/contact.html">ابدأ الآن</a>
+      </article>
+
+      <!-- بطاقة 2: الإقامات -->
+      <article class="card reveal service-card">
+        <div class="h">
+          <span class="icon" aria-hidden="true">🪪</span>
+          <span class="title">الإقامات</span>
+        </div>
+        <p class="desc">
+          إصدار/تجديد الإقامات، نقل كفالة، وتحديث المهنة بجدولة واضحة.
+        </p>
+        <ul class="list">
+          <li>✔ متابعة شاملة للطلبات</li>
+          <li>✔ تذكيرات بالمواعيد</li>
+          <li>✔ تقارير دورية</li>
+        </ul>
+        <a class="btn btn-brand" href="pages/contact.html">اطلب الخدمة</a>
+      </article>
+
+      <!-- بطاقة 3: تأشيرات الأفراد -->
+      <article class="card reveal service-card">
+        <div class="h">
+          <span class="icon" aria-hidden="true">🧳</span>
+          <span class="title">تأشيرات الأفراد</span>
+        </div>
+        <p class="desc">
+          زيارة عائلية/شخصية، عمرة إلكترونية، وزيارات عمل قصيرة بسرعة متابعة.
+        </p>
+        <ul class="list">
+          <li>✔ خطوات بسيطة وواضحة</li>
+          <li>✔ دعم فوري</li>
+          <li>✔ أسعار شفافة</li>
+        </ul>
+        <a class="btn btn-brand" href="pages/contact.html">احجز استشارة</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+    <!-- الاستعراض السريع -->
+    <section class="section alt" id="preview">
+      <div class="container">
+        <div class="grid preview-grid">
+          <div>
+            <h3 class="h2" data-i18n="preview_title">استعراض سريع</h3>
+            <p class="muted" data-i18n="preview_sub">إعلانات متغيرة كل 20 ثانية بعنوان ونص وتأثير حركة مختلف.</p>
+            <div class="preview-controls">
+              <button class="btn btn-ghost" id="nextAd" aria-label="الإعلان التالي">▶</button>
+              <button class="btn btn-ghost" id="prevAd" aria-label="الإعلان السابق">◀</button>
+
+            </div>
+          </div>
+
+          <div>
+            <article class="preview-stage" id="previewStage">
+              <div class="ad-slide in fx-fade" data-title="تأشيرات الشركات" data-text="إدارة كاملة لجميع المهن مع تفويض إلكتروني ومتابعة.">
+                <div class="ad-media" style="background-image:url('assets/images/hero/ad-company.jpg')"></div>
+                <div class="ad-caption"><h4>تأشيرات الشركات</h4><p>إدارة كاملة لجميع المهن مع تفويض إلكتروني ومتابعة.</p></div>
+              </div>
+              <div class="ad-slide" data-title="تجديد الإقامات" data-text="تجديد/إصدار، نقل كفالة، وتحديث مهنة بجدولة واضحة.">
+                <div class="ad-media" style="background-image:url('assets/images/hero/ad-residency.jpg')"></div>
+                <div class="ad-caption"><h4>تجديد الإقامات</h4><p>تجديد/إصدار، نقل كفالة، وتحديث مهنة بجدولة واضحة.</p></div>
+              </div>
+              <div class="ad-slide" data-title="تأشيرات الأفراد" data-text="زيارة عائلية/شخصية، عمرة إلكترونية، زيارة عمل قصيرة.">
+                <div class="ad-media" style="background-image:url('assets/images/hero/ad-individual.jpg')"></div>
+                <div class="ad-caption"><h4>تأشيرات الأفراد</h4><p>زيارة عائلية/شخصية، عمرة إلكترونية، زيارة عمل قصيرة.</p></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- كيف نعمل -->
+    <section class="section" id="process">
+      <div class="container">
+        <h2 data-i18n="process_title">كيف نعمل؟</h2>
+        <div class="timeline alt-shift" id="timeline">
+          <div class="step offset-up"><div class="num">1</div><h4>تواصل</h4><div class="muted">واتساب/اتصال</div></div>
+          <div class="step offset-down"><div class="num">2</div><h4>مراجعة</h4><div class="muted">متطلبات + مدة</div></div>
+          <div class="step offset-up"><div class="num">3</div><h4>تجهيز</h4><div class="muted">نماذج ومواعيد</div></div>
+          <div class="step offset-down"><div class="num">4</div><h4>تقديم</h4><div class="muted">متابعة حالة</div></div>
+          <div class="step offset-up"><div class="num">5</div><h4>استلام</h4><div class="muted">إشعار فوري</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ماذا يقول عملاؤنا -->
+    <section class="section" id="testimonials">
+      <div class="container">
+        <div class="gold-divider">ماذا يقول عملاؤنا؟</div>
+        <div class="grid cards-3">
+          <article class="quote card interactive">
+            <div class="quote-head"><b>شركة مقاولات</b><span class="time">قبل 2 ساعة</span></div>
+            <p class="muted">إنجاز سريع للتأشيرات المطلوبة ومتابعة رائعة.</p>
+          </article>
+          <article class="quote card interactive">
+            <div class="quote-head"><b>فرد</b><span class="time">أمس 10:30 ص</span></div>
+            <p class="muted">إصدار عمرة إلكترونية خلال وقت قياسي.</p>
+          </article>
+          <article class="quote card interactive">
+            <div class="quote-head"><b>HR</b><span class="time">قبل 3 أيام</span></div>
+            <p class="muted">تقارير حالة أسبوعية واضحة للفريق.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ + CTA -->
+    <section class="section" id="faq">
+      <div class="container">
+        <h2 data-i18n="faq_title">الأسئلة الشائعة</h2>
+        <div class="faq" id="faqWrap" data-endpoint="php/faqs.php"></div>
+        <article class="card cta-glow">
+          <div class="cta-glow-bg" aria-hidden="true"></div>
+          <div class="body">
+            <h3 data-i18n="cta_title">جاهز نبدأ؟</h3>
+            <p class="muted" data-i18n="cta_sub">أرسل تفاصيلك أو تواصل عبر واتساب وسنعاودك بسرعة.</p>
+            <div class="cta-actions">
+              <a class="btn btn-brand" target="_blank" href="https://wa.me/966500000000" data-i18n="cta_whatsapp">محادثة واتساب</a>
+              <a class="btn btn-ghost" href="pages/contact.html" data-i18n="cta_request">طلب تواصل</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- يتم الحقن -->
+  <div id="__footer"></div>
+
+  <!-- JS -->
+  <script src="assets/js/inject.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
