@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Moon, Sun, Menu, X, Globe } from 'lucide-react';
+import { Moon, Sun, Menu, X, Globe, LogOut, User } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { supabase } from '@/integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 interface HeaderProps {
   language: 'ar' | 'en';
@@ -11,7 +14,10 @@ interface HeaderProps {
 const Header = ({ language, onLanguageChange }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const { theme, setTheme } = useTheme();
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +27,26 @@ const Header = ({ language, onLanguageChange }: HeaderProps) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: language === 'ar' ? 'تم تسجيل الخروج' : 'Logged out',
+      description: language === 'ar' ? 'تم تسجيل الخروج بنجاح' : 'Successfully logged out'
+    });
+  };
 
   const navItems = {
     ar: [
@@ -100,10 +126,30 @@ const Header = ({ language, onLanguageChange }: HeaderProps) => {
             <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           </Button>
 
-          {/* CTA Button */}
-          <Button className="btn-nux hidden md:flex">
-            {language === 'ar' ? 'ابدأ الآن' : 'Get Started'}
-          </Button>
+          {/* Auth Buttons */}
+          {user ? (
+            <div className="flex items-center gap-3">
+              <div className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg bg-muted">
+                <User className="h-4 w-4" />
+                <span className="text-sm truncate max-w-[150px]">{user.email}</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleLogout}
+                className="text-destructive hover:text-destructive"
+              >
+                <LogOut className="h-4 w-4" />
+              </Button>
+            </div>
+          ) : (
+            <Button 
+              onClick={() => navigate('/auth')}
+              className="btn-nux hidden md:flex"
+            >
+              {language === 'ar' ? 'ابدأ الآن' : 'Get Started'}
+            </Button>
+          )}
 
           {/* Mobile Menu Toggle */}
           <Button
@@ -142,9 +188,23 @@ const Header = ({ language, onLanguageChange }: HeaderProps) => {
                   <Globe className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
                   {language === 'ar' ? 'English' : 'عربي'}
                 </Button>
-                <Button className="btn-nux w-full">
-                  {language === 'ar' ? 'ابدأ الآن' : 'Get Started'}
-                </Button>
+                {user ? (
+                  <Button 
+                    variant="outline" 
+                    className="w-full mb-2"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
+                    {language === 'ar' ? 'تسجيل الخروج' : 'Logout'}
+                  </Button>
+                ) : (
+                  <Button 
+                    onClick={() => navigate('/auth')}
+                    className="btn-nux w-full"
+                  >
+                    {language === 'ar' ? 'ابدأ الآن' : 'Get Started'}
+                  </Button>
+                )}
               </div>
             </nav>
           </div>

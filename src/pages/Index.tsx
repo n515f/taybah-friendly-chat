@@ -6,6 +6,8 @@ import Services from '@/components/Services';
 import Process from '@/components/Process';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
+import ChatWidget from '@/components/ChatWidget';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Index = () => {
   const [language, setLanguage] = useState<'ar' | 'en'>('ar');
@@ -57,6 +59,8 @@ const Index = () => {
           <FAQ language={language} />
         </main>
         <Footer language={language} />
+        <ChatWidget language={language} />
+        <WhatsAppButton language={language} />
       </div>
     </ThemeProvider>
   );
