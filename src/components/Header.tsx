@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Menu, X, Globe, LogOut, User } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { supabase } from '@/integrations/supabase/client';
-import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 
 interface HeaderProps {
@@ -12,12 +12,12 @@ interface HeaderProps {
 }
 
 const Header = ({ language, onLanguageChange }: HeaderProps) => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const { theme, setTheme } = useTheme();
-  const navigate = useNavigate();
-  const { toast } = useToast();
 
   useEffect(() => {
     const handleScroll = () => {
