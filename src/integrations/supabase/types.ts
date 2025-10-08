@@ -68,15 +68,97 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      visa_applications: {
+        Row: {
+          admin_notes: string | null
+          applicant_email: string
+          applicant_name: string
+          applicant_phone: string
+          created_at: string | null
+          id: string
+          nationality: string
+          passport_number: string
+          purpose: string | null
+          status: Database["public"]["Enums"]["application_status"] | null
+          updated_at: string | null
+          user_id: string
+          visa_type: Database["public"]["Enums"]["visa_type"]
+        }
+        Insert: {
+          admin_notes?: string | null
+          applicant_email: string
+          applicant_name: string
+          applicant_phone: string
+          created_at?: string | null
+          id?: string
+          nationality: string
+          passport_number: string
+          purpose?: string | null
+          status?: Database["public"]["Enums"]["application_status"] | null
+          updated_at?: string | null
+          user_id: string
+          visa_type: Database["public"]["Enums"]["visa_type"]
+        }
+        Update: {
+          admin_notes?: string | null
+          applicant_email?: string
+          applicant_name?: string
+          applicant_phone?: string
+          created_at?: string | null
+          id?: string
+          nationality?: string
+          passport_number?: string
+          purpose?: string | null
+          status?: Database["public"]["Enums"]["application_status"] | null
+          updated_at?: string | null
+          user_id?: string
+          visa_type?: Database["public"]["Enums"]["visa_type"]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      application_status:
+        | "pending"
+        | "under_review"
+        | "approved"
+        | "rejected"
+        | "completed"
+      visa_type: "work" | "residence" | "individual" | "family" | "visit"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -203,6 +285,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      application_status: [
+        "pending",
+        "under_review",
+        "approved",
+        "rejected",
+        "completed",
+      ],
+      visa_type: ["work", "residence", "individual", "family", "visit"],
+    },
   },
 } as const

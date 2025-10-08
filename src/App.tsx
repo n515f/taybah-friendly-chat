@@ -7,6 +7,9 @@ import { useState, useEffect } from "react";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import VisaApplication from "./pages/VisaApplication";
+import MyApplications from "./pages/MyApplications";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +30,9 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth language={language} />} />
+            <Route path="/visa-application" element={<VisaApplication />} />
+            <Route path="/my-applications" element={<MyApplications />} />
+            <Route path="/admin" element={<Admin />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

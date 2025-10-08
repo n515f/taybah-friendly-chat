@@ -17,6 +17,7 @@ const Header = ({ language, onLanguageChange }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -28,13 +29,32 @@ const Header = ({ language, onLanguageChange }: HeaderProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const checkAdminRole = async (userId: string) => {
+    const { data } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', userId)
+      .eq('role', 'admin')
+      .single();
+    
+    setIsAdmin(!!data);
+  };
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        checkAdminRole(session.user.id);
+      }
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        checkAdminRole(session.user.id);
+      } else {
+        setIsAdmin(false);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -128,7 +148,15 @@ const Header = ({ language, onLanguageChange }: HeaderProps) => {
 
           {/* Auth Buttons */}
           {user ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" onClick={() => navigate('/my-applications')} className="hidden md:flex">
+                {language === 'ar' ? 'طلباتي' : 'My Applications'}
+              </Button>
+              {isAdmin && (
+                <Button variant="ghost" size="sm" onClick={() => navigate('/admin')} className="hidden md:flex">
+                  {language === 'ar' ? 'لوحة الإدارة' : 'Admin'}
+                </Button>
+              )}
               <div className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg bg-muted">
                 <User className="h-4 w-4" />
                 <span className="text-sm truncate max-w-[150px]">{user.email}</span>
@@ -189,14 +217,38 @@ const Header = ({ language, onLanguageChange }: HeaderProps) => {
                   {language === 'ar' ? 'English' : 'عربي'}
                 </Button>
                 {user ? (
-                  <Button 
-                    variant="outline" 
-                    className="w-full mb-2"
-                    onClick={handleLogout}
-                  >
-                    <LogOut className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
-                    {language === 'ar' ? 'تسجيل الخروج' : 'Logout'}
-                  </Button>
+                  <>
+                    <Button 
+                      variant="outline" 
+                      className="w-full mb-2"
+                      onClick={() => {
+                        navigate('/my-applications');
+                        setIsMobileMenuOpen(false);
+                      }}
+                    >
+                      {language === 'ar' ? 'طلباتي' : 'My Applications'}
+                    </Button>
+                    {isAdmin && (
+                      <Button 
+                        variant="outline" 
+                        className="w-full mb-2"
+                        onClick={() => {
+                          navigate('/admin');
+                          setIsMobileMenuOpen(false);
+                        }}
+                      >
+                        {language === 'ar' ? 'لوحة الإدارة' : 'Admin'}
+                      </Button>
+                    )}
+                    <Button 
+                      variant="outline" 
+                      className="w-full mb-2"
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
+                      {language === 'ar' ? 'تسجيل الخروج' : 'Logout'}
+                    </Button>
+                  </>
                 ) : (
                   <Button 
                     onClick={() => navigate('/auth')}
