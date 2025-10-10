@@ -27,11 +27,11 @@ const Footer = ({ language }: FooterProps) => {
         'نقل الكفالة'
       ],
       infoLinks: [
-        'من نحن',
-        'سياسة الخصوصية',
-        'الشروط والأحكام',
-        'الأسئلة الشائعة',
-        'اتصل بنا'
+        { text: 'من نحن', href: '/about' },
+        { text: 'سياسة الخصوصية', href: '/privacy' },
+        { text: 'الشروط والأحكام', href: '/terms' },
+        { text: 'الأسئلة الشائعة', href: '/#faq' },
+        { text: 'اتصل بنا', href: '/#contact' }
       ],
       features: [
         { icon: Shield, text: 'موثوق ومرخص' },
@@ -60,11 +60,11 @@ const Footer = ({ language }: FooterProps) => {
         'Sponsorship Transfer'
       ],
       infoLinks: [
-        'About Us',
-        'Privacy Policy',
-        'Terms & Conditions',
-        'FAQ',
-        'Contact Us'
+        { text: 'About Us', href: '/about' },
+        { text: 'Privacy Policy', href: '/privacy' },
+        { text: 'Terms & Conditions', href: '/terms' },
+        { text: 'FAQ', href: '/#faq' },
+        { text: 'Contact Us', href: '/#contact' }
       ],
       features: [
         { icon: Shield, text: 'Trusted & Licensed' },
@@ -180,10 +180,10 @@ const Footer = ({ language }: FooterProps) => {
               {currentContent.infoLinks.map((link, index) => (
                 <li key={index}>
                   <a 
-                    href="#"
+                    href={link.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {link}
+                    {link.text}
                   </a>
                 </li>
               ))}
@@ -203,7 +203,7 @@ const Footer = ({ language }: FooterProps) => {
             {/* Quick Contact */}
             <div className="flex items-center gap-4">
               <button 
-                onClick={() => window.open('https://wa.me/966500000000', '_blank')}
+                onClick={() => window.open('https://wa.me/967738742001', '_blank')}
                 className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors text-sm font-medium"
               >
                 <MessageCircle className="h-4 w-4" />

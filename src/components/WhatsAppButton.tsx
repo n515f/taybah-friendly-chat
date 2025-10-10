@@ -5,7 +5,7 @@ interface WhatsAppButtonProps {
 }
 
 const WhatsAppButton = ({ language }: WhatsAppButtonProps) => {
-  const phoneNumber = '966500000000'; // Replace with actual number
+  const phoneNumber = '967738742001';
   const message = language === 'ar' 
     ? 'مرحباً، أرغب في الاستفسار عن خدماتكم'
     : 'Hello, I would like to inquire about your services';

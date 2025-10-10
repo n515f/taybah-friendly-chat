@@ -10,6 +10,9 @@ import NotFound from "./pages/NotFound";
 import VisaApplication from "./pages/VisaApplication";
 import MyApplications from "./pages/MyApplications";
 import Admin from "./pages/Admin";
+import About from "./pages/About";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +36,9 @@ const App = () => {
             <Route path="/visa-application" element={<VisaApplication />} />
             <Route path="/my-applications" element={<MyApplications />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
