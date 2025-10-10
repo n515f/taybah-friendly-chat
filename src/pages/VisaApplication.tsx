@@ -13,6 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { FileText, ArrowRight, Home } from 'lucide-react';
 import Header from '@/components/Header';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const formSchema = z.object({
   applicant_name: z.string().min(2, 'الاسم يجب أن يكون حرفين على الأقل'),
@@ -30,7 +31,7 @@ const VisaApplication = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [language] = useState<'ar' | 'en'>('ar');
+  const { language, setLanguage } = useLanguage();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -87,36 +88,84 @@ const VisaApplication = () => {
     setIsSubmitting(false);
   };
 
-  const visaTypes = {
+
+  const content = {
+    ar: {
+      title: 'تقديم طلب تأشيرة جديد',
+      description: 'املأ النموذج أدناه لتقديم طلب للحصول على تأشيرة',
+      home: 'الرئيسية',
+      submitApplication: 'تقديم طلب تأشيرة',
+      fullName: 'الاسم الكامل',
+      email: 'البريد الإلكتروني',
+      phone: 'رقم الهاتف',
+      visaType: 'نوع التأشيرة',
+      selectVisaType: 'اختر نوع التأشيرة',
+      passportNumber: 'رقم جواز السفر',
+      nationality: 'الجنسية',
+      purpose: 'الغرض من التأشيرة',
+      purposePlaceholder: 'اذكر الغرض من طلب التأشيرة...',
+      submit: 'تقديم الطلب',
+      submitting: 'جاري التقديم...',
+      cancel: 'إلغاء'
+    },
+    en: {
+      title: 'Submit New Visa Application',
+      description: 'Fill out the form below to apply for a visa',
+      home: 'Home',
+      submitApplication: 'Submit Visa Application',
+      fullName: 'Full Name',
+      email: 'Email',
+      phone: 'Phone Number',
+      visaType: 'Visa Type',
+      selectVisaType: 'Select visa type',
+      passportNumber: 'Passport Number',
+      nationality: 'Nationality',
+      purpose: 'Purpose of Visa',
+      purposePlaceholder: 'State the purpose of the visa application...',
+      submit: 'Submit Application',
+      submitting: 'Submitting...',
+      cancel: 'Cancel'
+    }
+  };
+
+  const visaTypes = language === 'ar' ? {
     work: 'تأشيرة عمل',
     residence: 'إقامة',
     individual: 'فردية',
     family: 'عائلية',
     visit: 'زيارة',
+  } : {
+    work: 'Work Visa',
+    residence: 'Residence',
+    individual: 'Individual',
+    family: 'Family',
+    visit: 'Visit',
   };
 
+  const currentContent = content[language];
+
   return (
-    <div className="min-h-screen bg-background">
-      <Header language={language} onLanguageChange={() => {}} />
+    <div className="min-h-screen bg-background" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      <Header language={language} onLanguageChange={setLanguage} />
       
       <div className="container mx-auto px-4 py-8 mt-20">
         <div className="flex items-center gap-2 mb-6">
           <Button variant="ghost" onClick={() => navigate('/')}>
-            <Home className="h-4 w-4 ml-2" />
-            الرئيسية
+            <Home className={`h-4 w-4 ${language === 'ar' ? 'ml-2' : 'mr-2'}`} />
+            {currentContent.home}
           </Button>
           <ArrowRight className="h-4 w-4" />
-          <span className="text-muted-foreground">تقديم طلب تأشيرة</span>
+          <span className="text-muted-foreground">{currentContent.submitApplication}</span>
         </div>
 
         <Card className="max-w-3xl mx-auto">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-2xl">
               <FileText className="h-6 w-6 text-primary" />
-              تقديم طلب تأشيرة جديد
+              {currentContent.title}
             </CardTitle>
             <CardDescription>
-              املأ النموذج أدناه لتقديم طلب للحصول على تأشيرة
+              {currentContent.description}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -127,9 +176,9 @@ const VisaApplication = () => {
                   name="applicant_name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>الاسم الكامل *</FormLabel>
+                      <FormLabel>{currentContent.fullName} *</FormLabel>
                       <FormControl>
-                        <Input placeholder="أدخل الاسم الكامل" {...field} />
+                        <Input placeholder={language === 'ar' ? 'أدخل الاسم الكامل' : 'Enter full name'} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -142,7 +191,7 @@ const VisaApplication = () => {
                     name="applicant_email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>البريد الإلكتروني *</FormLabel>
+                        <FormLabel>{currentContent.email} *</FormLabel>
                         <FormControl>
                           <Input type="email" placeholder="email@example.com" {...field} />
                         </FormControl>
@@ -156,7 +205,7 @@ const VisaApplication = () => {
                     name="applicant_phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>رقم الهاتف *</FormLabel>
+                        <FormLabel>{currentContent.phone} *</FormLabel>
                         <FormControl>
                           <Input placeholder="+966XXXXXXXXX" {...field} />
                         </FormControl>
@@ -171,11 +220,11 @@ const VisaApplication = () => {
                   name="visa_type"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>نوع التأشيرة *</FormLabel>
+                      <FormLabel>{currentContent.visaType} *</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="اختر نوع التأشيرة" />
+                            <SelectValue placeholder={currentContent.selectVisaType} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -197,9 +246,9 @@ const VisaApplication = () => {
                     name="passport_number"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>رقم جواز السفر *</FormLabel>
+                        <FormLabel>{currentContent.passportNumber} *</FormLabel>
                         <FormControl>
-                          <Input placeholder="رقم الجواز" {...field} />
+                          <Input placeholder={language === 'ar' ? 'رقم الجواز' : 'Passport number'} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -211,9 +260,9 @@ const VisaApplication = () => {
                     name="nationality"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>الجنسية *</FormLabel>
+                        <FormLabel>{currentContent.nationality} *</FormLabel>
                         <FormControl>
-                          <Input placeholder="مثال: مصري، سوري، أردني" {...field} />
+                          <Input placeholder={language === 'ar' ? 'مثال: مصري، سوري، أردني' : 'Example: Egyptian, Syrian, Jordanian'} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -226,10 +275,10 @@ const VisaApplication = () => {
                   name="purpose"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>الغرض من التأشيرة</FormLabel>
+                      <FormLabel>{currentContent.purpose}</FormLabel>
                       <FormControl>
                         <Textarea 
-                          placeholder="اذكر الغرض من طلب التأشيرة..."
+                          placeholder={currentContent.purposePlaceholder}
                           className="min-h-[100px]"
                           {...field}
                         />
@@ -241,10 +290,10 @@ const VisaApplication = () => {
 
                 <div className="flex gap-4">
                   <Button type="submit" disabled={isSubmitting} className="flex-1">
-                    {isSubmitting ? 'جاري التقديم...' : 'تقديم الطلب'}
+                    {isSubmitting ? currentContent.submitting : currentContent.submit}
                   </Button>
                   <Button type="button" variant="outline" onClick={() => navigate('/')}>
-                    إلغاء
+                    {currentContent.cancel}
                   </Button>
                 </div>
               </form>

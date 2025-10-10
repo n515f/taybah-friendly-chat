@@ -2,13 +2,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Mail, Lock, User, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Globe } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-interface AuthProps {
-  language: 'ar' | 'en';
-}
-
-const Auth = ({ language }: AuthProps) => {
+const Auth = () => {
+  const { language, setLanguage } = useLanguage();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLogin, setIsLogin] = useState(true);
@@ -115,6 +113,16 @@ const Auth = ({ language }: AuthProps) => {
     >
       <div className="w-full max-w-md">
         <div className="glass-effect rounded-3xl p-8 shadow-elegant">
+          <div className="flex justify-end mb-4">
+            <button
+              onClick={() => setLanguage(language === 'ar' ? 'en' : 'ar')}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors"
+            >
+              <Globe className="h-4 w-4" />
+              <span className="text-sm">{language === 'ar' ? 'English' : 'العربية'}</span>
+            </button>
+          </div>
+          
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gradient mb-2">
               Nux.T Visa

@@ -1,15 +1,15 @@
-import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Privacy = () => {
-  const [language] = useState<'ar' | 'en'>('ar');
+  const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header language={language} onLanguageChange={() => {}} />
+    <div className="min-h-screen bg-background" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      <Header language={language} onLanguageChange={setLanguage} />
       <WhatsAppButton language={language} />
 
       <div className="container mx-auto px-4 py-24">

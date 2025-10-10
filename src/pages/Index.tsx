@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'next-themes';
 import Header from '@/components/Header';
@@ -11,26 +11,11 @@ import ChatWidget from '@/components/ChatWidget';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { Button } from '@/components/ui/button';
 import { FileText } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Index = () => {
   const navigate = useNavigate();
-  const [language, setLanguage] = useState<'ar' | 'en'>('ar');
-
-  useEffect(() => {
-    const savedLang = localStorage.getItem('language') as 'ar' | 'en' || 'ar';
-    setLanguage(savedLang);
-    
-    // Set document direction and lang
-    document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = savedLang;
-  }, []);
-
-  const handleLanguageChange = (lang: 'ar' | 'en') => {
-    setLanguage(lang);
-    localStorage.setItem('language', lang);
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = lang;
-  };
+  const { language, setLanguage } = useLanguage();
 
   // Reveal animation on scroll
   useEffect(() => {
@@ -55,7 +40,7 @@ const Index = () => {
   return (
     <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem>
       <div className="min-h-screen bg-background text-foreground">
-        <Header language={language} onLanguageChange={handleLanguageChange} />
+        <Header language={language} onLanguageChange={setLanguage} />
         <main>
           <Hero language={language} />
           
